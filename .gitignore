@@ -1,0 +1,8 @@
+*.o
+*.cpp.o
+*.a
+*.obj
+*.pch
+*.pdb
+*.ipch
+Clps1.VC.VC.opendb
