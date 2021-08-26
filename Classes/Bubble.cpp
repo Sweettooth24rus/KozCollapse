@@ -11,3 +11,15 @@ Bubble* Bubble::create(const std::string& filename)
 	CC_SAFE_DELETE(bubble);
 	return nullptr;
 }
+
+void Bubble::setColor(int tmp) {
+	color = tmp;
+	if (color == 0)
+		this->setVisible(false);
+	else
+		this->setVisible(true);
+}
+
+int Bubble::getColor() {
+	return color;
+}

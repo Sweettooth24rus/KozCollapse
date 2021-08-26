@@ -1,7 +1,7 @@
 ﻿  HelloWorldScene.cpp
 c:\cocos2d-x-3.17.2\project\clps1\classes\helloworldscene.cpp(134): warning C4996: 'cocos2d::ui::TextField::setText': объявлен deprecate
   c:\cocos2d-x-3.17.2\project\clps1\cocos2d\cocos\ui\uitextfield.h(415): note:  см. объявление "cocos2d::ui::TextField::setText"
-c:\cocos2d-x-3.17.2\project\clps1\classes\helloworldscene.cpp(138): warning C4996: 'cocos2d::ui::TextField::setText': объявлен deprecate
+c:\cocos2d-x-3.17.2\project\clps1\classes\helloworldscene.cpp(139): warning C4996: 'cocos2d::ui::TextField::setText': объявлен deprecate
   c:\cocos2d-x-3.17.2\project\clps1\cocos2d\cocos\ui\uitextfield.h(415): note:  см. объявление "cocos2d::ui::TextField::setText"
   Clps1.vcxproj -> C:\cocos2d-x-3.17.2\Project\Clps1\proj.win32\Debug.win32\Clps1.exe
   Clps1.vcxproj -> C:\cocos2d-x-3.17.2\Project\Clps1\proj.win32\Debug.win32\Clps1.pdb (Full PDB)

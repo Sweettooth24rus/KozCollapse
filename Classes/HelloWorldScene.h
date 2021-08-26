@@ -44,7 +44,11 @@ public:
 
 	bool ontouchBegin(Touch* touch, Event* event);
 
-	void changeImage(int i, int j);
+	void popBubble(int i, int j);
+
+	void changeImage(int i, int j, int color);
+
+	void fallDown();
 
     static cocos2d::Scene* createScene();
 

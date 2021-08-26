@@ -87,19 +87,19 @@ bool HelloWorld::init() {
 			switch (color) {
 			case 1:
 				bubbles[i][j] = Bubble::create("BubbleBlue.png");
-				bubbles[i][j]->color = 1;
+				bubbles[i][j]->setColor(1);
 				break;
 			case 2:
 				bubbles[i][j] = Bubble::create("BubbleGreen.png");
-				bubbles[i][j]->color = 2;
+				bubbles[i][j]->setColor(2);
 				break;
 			case 3:
 				bubbles[i][j] = Bubble::create("BubbleSalad.png");
-				bubbles[i][j]->color = 3;
+				bubbles[i][j]->setColor(3);
 				break;
 			case 4:
 				bubbles[i][j] = Bubble::create("BubbleYellow.png");
-				bubbles[i][j]->color = 4;
+				bubbles[i][j]->setColor(4);
 				break;
 			}
 			bubbles[i][j]->setPosition(Vec2(bubbles[i][j]->getContentSize().width * i + bubbles[i][j]->getContentSize().width / 2, bubbles[i][j]->getContentSize().height * j + bubbles[i][j]->getContentSize().height / 2));
@@ -128,40 +128,57 @@ bool HelloWorld::init() {
 }
 
 bool HelloWorld::ontouchBegin(Touch* touch, Event* event) {
-	if ((touch->getLocation().x < bubbles[0][0]->getContentSize().width * 10) && (touch->getLocation().y < bubbles[0][0]->getContentSize().height * 10)) {
+	if ((touch->getLocation().x + 1 < bubbles[0][0]->getContentSize().width * 10) && (touch->getLocation().y + 1 < bubbles[0][0]->getContentSize().height * 10)) {
 		int x = (int)touch->getLocation().x / (int)bubbles[0][0]->getContentSize().width;
 		int y = (int)touch->getLocation().y / (int)bubbles[0][0]->getContentSize().height;
 		textField->setText(to_string(x) + " " + to_string(y));
-		changeImage(x, y);
+		popBubble(x, y);
+		fallDown();
 	}
 	else
 		textField->setText("11 11");
 	return true; // Если вы его приняли
 }
 
-void HelloWorld::changeImage(int i, int j) {
-	int color = (rand_0_1() * 4 + 1);
-	if (bubbles[i][j]->color == color) {
-		changeImage(i, j);
-		return;
-	}
+void HelloWorld::popBubble(int i, int j) {
+	bubbles[i][j]->setVisible(false);
+	bubbles[i][j]->setColor(0);
+}
+
+void HelloWorld::changeImage(int i, int j, int color) {
 	switch (color) {
+	case 0:
+		bubbles[i][j]->setColor(0);
+		break;
 	case 1:
 		bubbles[i][j]->setTexture("BubbleBlue.png");
-		bubbles[i][j]->color = 1;
+		bubbles[i][j]->setColor(1);
 		break;
 	case 2:
 		bubbles[i][j]->setTexture("BubbleGreen.png");
-		bubbles[i][j]->color = 2;
+		bubbles[i][j]->setColor(2);
 		break;
 	case 3:
 		bubbles[i][j]->setTexture("BubbleSalad.png");
-		bubbles[i][j]->color = 3;
+		bubbles[i][j]->setColor(3);
 		break;
 	case 4:
 		bubbles[i][j]->setTexture("BubbleYellow.png");
-		bubbles[i][j]->color = 4;
+		bubbles[i][j]->setColor(4);
 		break;
+	}
+}
+
+void HelloWorld::fallDown() {
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10 - 1; j++) {
+			if (bubbles[i][j]->getColor() == 0) {
+				for (int k = j; k < 10 - 1; k++) {
+					changeImage(i, k, bubbles[i][k + 1]->getColor());
+				}
+				bubbles[i][10 - 1]->setColor(0);
+			}
+		}
 	}
 }
 

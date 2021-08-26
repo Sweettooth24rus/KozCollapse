@@ -6,9 +6,13 @@
 using namespace cocos2d;
 
 class Bubble : public cocos2d::Sprite {
+private:
+	int color;
 public:
 
-	int color;
+	void setColor(int tmp);
+
+	int getColor();
 
 	static Bubble* create(const std::string& filename);
 
