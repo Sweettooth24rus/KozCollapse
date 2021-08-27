@@ -14,10 +14,24 @@ Bubble* Bubble::create(const std::string& filename)
 
 void Bubble::setColor(int tmp) {
 	color = tmp;
-	if (color == 0)
+	this->setVisible(true);
+	switch (tmp) {
+	case 0:
 		this->setVisible(false);
-	else
-		this->setVisible(true);
+		break;
+	case 1:
+		this->setTexture("BubbleBlue.png");
+		break;
+	case 2:
+		this->setTexture("BubbleGreen.png");
+		break;
+	case 3:
+		this->setTexture("BubbleSalad.png");
+		break;
+	case 4:
+		this->setTexture("BubbleYellow.png");
+		break;
+	}
 }
 
 int Bubble::getColor() {

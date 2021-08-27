@@ -132,7 +132,7 @@ bool HelloWorld::ontouchBegin(Touch* touch, Event* event) {
 		int x = (int)touch->getLocation().x / (int)bubbles[0][0]->getContentSize().width;
 		int y = (int)touch->getLocation().y / (int)bubbles[0][0]->getContentSize().height;
 		textField->setText(to_string(x) + " " + to_string(y));
-		popBubble(x, y);
+		popBubble(x, y, bubbles[x][y]->getColor());
 		fallDown();
 	}
 	else
@@ -140,33 +140,18 @@ bool HelloWorld::ontouchBegin(Touch* touch, Event* event) {
 	return true; // Если вы его приняли
 }
 
-void HelloWorld::popBubble(int i, int j) {
-	bubbles[i][j]->setVisible(false);
+void HelloWorld::popBubble(int i, int j, int color) {
+	if ((bubbles[i][j]->getColor() == 0) || (bubbles[i][j]->getColor() != color))
+		return;
 	bubbles[i][j]->setColor(0);
-}
-
-void HelloWorld::changeImage(int i, int j, int color) {
-	switch (color) {
-	case 0:
-		bubbles[i][j]->setColor(0);
-		break;
-	case 1:
-		bubbles[i][j]->setTexture("BubbleBlue.png");
-		bubbles[i][j]->setColor(1);
-		break;
-	case 2:
-		bubbles[i][j]->setTexture("BubbleGreen.png");
-		bubbles[i][j]->setColor(2);
-		break;
-	case 3:
-		bubbles[i][j]->setTexture("BubbleSalad.png");
-		bubbles[i][j]->setColor(3);
-		break;
-	case 4:
-		bubbles[i][j]->setTexture("BubbleYellow.png");
-		bubbles[i][j]->setColor(4);
-		break;
-	}
+	if (i != 0)
+		popBubble(i - 1, j, color);
+	if (i < 10 - 1)
+		popBubble(i + 1, j, color);
+	if (j != 0)
+		popBubble(i, j - 1, color);
+	if (j < 10 - 1)
+		popBubble(i, j + 1, color);
 }
 
 void HelloWorld::fallDown() {
@@ -174,12 +159,27 @@ void HelloWorld::fallDown() {
 		for (int j = 0; j < 10 - 1; j++) {
 			if (bubbles[i][j]->getColor() == 0) {
 				for (int k = j; k < 10 - 1; k++) {
-					changeImage(i, k, bubbles[i][k + 1]->getColor());
+					bubbles[i][k]->setColor(bubbles[i][k + 1]->getColor());
 				}
 				bubbles[i][10 - 1]->setColor(0);
 			}
 		}
 	}
+	fillSpace();
+}
+
+void HelloWorld::fillSpace() {
+	for (int i = 0; i < 10; i++) {
+		if (bubbles[i][10 - 1]->getColor() == 0) {
+			bubbles[i][10 - 1]->setColor(rand_0_1() * 4 + 1);
+		}
+	}
+	for (int i = 0; i < 10; i++)
+		for (int j = 0; j < 10; j++)
+			if (bubbles[i][j]->getColor() == 0) {
+				fallDown();
+				return;
+			}
 }
 
 void HelloWorld::menuCloseCallback(Ref* pSender) {
